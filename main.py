@@ -24,7 +24,7 @@ note_to_frequency = {
 }
 
 
-sd.default.device = [0, 6] # type: ignore # Input, Outputデバイス指定
+sd.default.device = [2, 3] # type: ignore # Input, Outputデバイス指定
 peak_freqs = []  # ピークの周波数を格納
 peak_amplitudes = []  # ピークの振幅を格納
 
@@ -52,13 +52,10 @@ def update_plot(frame):
     peak_freqs = freq[:N // 2][peaks]  # 周波数の配列からピーク周波数を取得
     peak_amplitudes = Amp[:N // 2][peaks]  # 振幅の配列からピーク振幅を取得
 
-    
-
-
-    print(peaks)
-
     if len(peak_freqs) >= 2:
-        frequency = max(peak_amplitudes)
+        # ピーク振幅のリストから最大の振幅とそのインデックスを取得
+        max_amplitude_index = np.argmax(peak_amplitudes)
+        frequency = peak_freqs[max_amplitude_index]
     else:
         # 入力として周波数を受け取る
         frequency = peak_freqs
@@ -74,11 +71,6 @@ def update_plot(frame):
 
     # 結果を表示
     print(f"入力された周波数 {frequency} Hz に最も近い音階は {closest_note} です。")
-
-
-
-
-
 
     return line,
 
